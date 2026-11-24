@@ -140,18 +140,23 @@ const DIALOGUE=[
 /* ---------- DIFFICULTIES (EN & JP) ---------- */
 const DIFFS=[
  {id:'easy',en:'Easy',jp:'イージー',lives:5,cont:6,bombs:3,spd:.8,rate:1.22,hpMul:.85,
+  dropChance:1,lifeChance:.45,thr:[.66,.33],
   descEn:'Gentler patterns · +3 extra continues (6 total)',
   descJp:'穏やかな弾幕 · コンティニュー+3（計6回）'},
  {id:'normal',en:'Normal',jp:'ノーマル',lives:5,cont:3,bombs:2,spd:1,rate:1,hpMul:1,
-  descEn:'Standard danmaku experience',
-  descJp:'標準的な弾幕体験'},
+  dropChance:.55,lifeChance:.25,thr:[.5],
+  descEn:'Standard danmaku experience · fewer item drops',
+  descJp:'標準的な弾幕体験 · アイテムドロップ減少'},
  {id:'hard',en:'Hard',jp:'ハード',lives:4,cont:2,bombs:2,spd:1.2,rate:.82,hpMul:1.15,
-  descEn:'Faster bullets and denser weaves',
-  descJp:'より速く、より密な弾幕'},
+  dropChance:.4,lifeChance:.2,thr:[.5],
+  descEn:'Faster bullets, denser weaves · scarce drops',
+  descJp:'より速く、より密な弾幕 · ドロップ希少'},
  {id:'extreme',en:'Extreme',jp:'エクストリーム',lives:3,cont:1,bombs:2,spd:1.38,rate:.68,hpMul:1.3,
-  descEn:'Relentless speed and overwhelming density',
-  descJp:'容赦ない速度と圧倒的な密度'},
+  dropChance:.25,lifeChance:.15,thr:[],
+  descEn:'Relentless speed and density · minimal drops',
+  descJp:'容赦ない速度と密度 · ドロップ極小'},
  {id:'nohit',en:'No Hit',jp:'ノーヒット',lives:1,cont:0,bombs:1,spd:1.15,rate:.9,hpMul:1,
+  dropChance:.2,lifeChance:0,thr:[],
   descEn:'Hit yourself once and the run is no more!',
   descJp:'一度でも当たれば挑戦は終了！'}
 ];
@@ -422,9 +427,9 @@ function card(p,i){
  $('card').innerHTML=`<div class="cd${p.s?' sp':''}">${i<10?`<i>${p.s?'Spell Card':'Attack'} ${(i>>1)+1}/5</i>`:''}<b>${p.j}</b><u>${p.r}</u><em>${p.e}</em>${p.d?`<p>${p.d}</p>`:''}</div>`;
 }
 function start(i){
- const s=S,p=P[i],hm=i<10?curDiff().hpMul:1;
+ const s=S,p=P[i],d=curDiff(),hm=i<10?d.hpMul:1;
  s.ph=i;s.mode='play';s.pt=0;s.cd={};s.n=0;s.m=0;s.bl=[];s.ls=[];s.cl=[];s.rift=[];
- s.bmax=s.bhp=Math.round(p.hp*hm);s.time=p.time;s.thr=[.66,.33];
+ s.bmax=s.bhp=Math.round(p.hp*hm);s.time=p.time;s.thr=[...d.thr];
  s.B.tx=160;s.B.ty=80;s.bossAlpha=1;p.init&&p.init(s.B);card(p,i);ov('');
  if(p.s)sfx('spell');
 }
@@ -457,7 +462,11 @@ function bomb(){
   s.bombs--;s.ring={x:s.p.x,y:s.p.y,r:0,t:0};s.inv=Math.max(s.inv,3);s.bhp-=75;sfx('bomb');
  }
 }
-function drop(x,y){S.it.push({x,y,k:Math.random()<.45?'s':'b',vy:-40})}
+function drop(x,y){
+ const d=curDiff();
+ if(Math.random()>d.dropChance)return;
+ S.it.push({x,y,k:Math.random()<d.lifeChance?'s':'b',vy:-40});
+}
 function hit(n){
  const s=S,d=curDiff();
  sfx('pichuun');
