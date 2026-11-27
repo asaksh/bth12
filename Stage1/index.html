@@ -367,7 +367,7 @@ function renderPause(){
   </div>
  </div>`,true);
  $('p_cont').onclick=()=>togglePause(false);
- $('p_exit').onclick=()=>{sfx('ok');stopBgm();setTimeout(()=>{window.location.href='../mainmenu.html'},120)};
+ $('p_exit').onclick=()=>{sfx('ok');stopBgm();setTimeout(()=>{window.location.href='../index.html'},120)};
  const bindV=(id,key)=>{
   const inp=$(id),out=inp.nextElementSibling;
   inp.oninput=()=>{vol[key]=inp.value/100;out.textContent=inp.value+'%';applyVol()};
