@@ -401,7 +401,7 @@ function renderPause(){
    <label><span>SFX / 効果音</span><input type="range" id="v_sfx" min="0" max="100" value="${Math.round(vol.sfx*100)}"><output>${Math.round(vol.sfx*100)}%</output></label>
   </div></div>`,true);
  $('p_cont').onclick=()=>togglePause(false);
- $('p_exit').onclick=()=>{sfx('ok');stopBgm();setTimeout(()=>{window.location.href='../mainmenu.html'},120)};
+ $('p_exit').onclick=()=>{sfx('ok');stopBgm();setTimeout(()=>{window.location.href='../index.html'},120)};
  $('p_shk').onclick=()=>{shakeOn=!shakeOn;sfx('select');renderPause()};
  const bindV=(id,key)=>{const inp=$(id),out=inp.nextElementSibling;inp.oninput=()=>{vol[key]=inp.value/100;out.textContent=inp.value+'%';applyVol()}};
  bindV('v_all','overall');bindV('v_mus','music');bindV('v_sfx','sfx');
