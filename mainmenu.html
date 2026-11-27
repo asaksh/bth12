@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lost Spirits at the Very End · 最果ての迷い霊</title>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0c14;--pn:#14111d;--ln:#6d3fb0;--tx:#ece7f7;--dim:#a79dc0;--hi:#ffd94a;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--tx);font-family:'DotGothic16','Hiragino Sans','Noto Sans JP',monospace}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 12px 24px}
+
+#wrap{position:relative;width:min(96vw,760px);border:2px solid var(--ln);background:linear-gradient(#171224,#0f0c18);overflow:hidden;box-shadow:0 0 28px rgba(0,0,0,.75)}
+#bgc{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;image-rendering:pixelated;opacity:.55}
+.inner{position:relative;z-index:1;padding:28px 26px 22px;display:flex;flex-direction:column;gap:22px}
+
+header{text-align:center;border-bottom:2px solid var(--ln);padding-bottom:18px;text-shadow:1px 1px 0 #000,0 0 10px #000}
+header small{display:block;font-size:13px;letter-spacing:.14em;color:#c58bff;margin-bottom:6px}
+header h1{margin:0;font-weight:400;font-size:clamp(24px,4.5vw,38px);line-height:1.15;color:var(--tx)}
+header .jp{margin:6px 0 2px;font-size:clamp(22px,4vw,32px);color:var(--hi);letter-spacing:.08em}
+header .rm{margin:0;font-size:14px;color:var(--dim);letter-spacing:.06em}
+
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid #3a265c;padding-bottom:6px}
+.sec-head h2{margin:0;font-weight:400;font-size:18px;color:var(--hi)}
+.sec-head span{font-size:13px;color:var(--dim)}
+
+.stages{display:flex;flex-direction:column;gap:14px}
+.stage{display:block;width:100%;text-align:left;text-decoration:none;color:var(--tx);background:rgba(26,20,41,.92);border:2px solid #4a2d78;padding:16px 18px;cursor:pointer;transition:background .1s,border-color .1s,box-shadow .1s;position:relative}
+.stage.sel,.stage:focus-visible{outline:none;background:#2b1a4d;border-color:var(--hi);box-shadow:0 0 14px rgba(255,217,74,.25)}
+.stage.locked{background:rgba(18,16,26,.78);border-color:#2d253d;color:#6e6582;opacity:.55;cursor:not-allowed;user-select:none}
+.stage.locked .stage-top{border-bottom-color:rgba(80,68,105,.35)}
+.stage.locked .stage-title,.stage.locked .stage-go,.stage.locked .desc-en{color:#6e6582}
+.stage-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px;border-bottom:1px solid rgba(109,63,176,.5);padding-bottom:8px}
+.stage-title{font-size:clamp(17px,2.8vw,22px);color:var(--tx)}
+.stage.sel .stage-title{color:var(--hi)}
+.stage-go{font-size:13px;color:#c58bff}
+.stage.sel .stage-go{color:var(--hi)}
+.stage.sel .stage-go::before{content:'▶ '}
+.desc-en{margin:0 0 6px;font-size:14px;line-height:1.5;color:#ece7f7}
+.desc-jp{margin:0;font-size:13.5px;line-height:1.55;color:#cfc4ea}
+
+.hint{text-align:center;font-size:13px;color:var(--dim);margin-top:-4px}
+.blink{animation:bl 1s steps(2) infinite}@keyframes bl{50%{opacity:.25}}
+
+footer{margin-top:4px;padding-top:14px;border-top:1px solid var(--ln);text-align:center;font-size:13px;color:var(--dim);line-height:1.6}
+footer div:first-child{color:#c58bff}
+.bgm-credit{margin-top:10px;padding-top:10px;border-top:1px solid rgba(109,63,176,.4);cursor:pointer;transition:opacity .15s}
+.bgm-credit.muted{opacity:.45}
+.bgm-en{color:var(--hi);font-size:13.5px}
+.bgm-jp{color:#cfc4ea;font-size:12.5px}
+</style></head><body>
+
+<main id="wrap">
+ <canvas id="bgc" width="320" height="240"></canvas>
+ <div class="inner">
+  <header>
+   <small>弾幕 · DANMAKU</small>
+   <h1>Lost Spirits at the Very End</h1>
+   <div class="jp">最果ての迷い霊</div>
+   <p class="rm">Saihate no Mayoirei</p>
+  </header>
+
+  <section aria-label="Choose Stage">
+   <div class="sec-head">
+    <h2>Choose Stage · ステージ選択</h2>
+    <span>Arrow / WASD · Z / Enter</span>
+   </div>
+  </section>
+
+  <nav class="stages" id="stages">
+   <a class="stage sel" href="Stage1/index.html" data-idx="0">
+    <div class="stage-top">
+     <span class="stage-title">Stage 1 - Yurei 幽霊</span>
+     <span class="stage-go">ENTER STAGE</span>
+    </div>
+    <p class="desc-en">A lost soul that wanders the barrier aimlessly, searching for its deceased mother. Eradicated by Shigure.</p>
+    <p class="desc-jp">境界をあてもなく彷徨い、亡き母を探し続ける迷える魂。時雨によって消滅させられた。</p>
+   </a>
+
+   <a class="stage" href="Stage2/index2.html" data-idx="1">
+    <div class="stage-top">
+     <span class="stage-title">Stage 2 - Boundary Keeper Shigure 時雨</span>
+     <span class="stage-go">ENTER STAGE</span>
+    </div>
+    <p class="desc-en">A youkai that guards the very end which is a passage to the outside world and prevents lost spirits from finding their way in.</p>
+    <p class="desc-jp">外の世界へと通じる最果ての道を守り、迷える魂たちが入り込むのを防ぐ妖怪。</p>
+   </a>
+
+   <a class="stage" href="Stage3/index.html" data-idx="2">
+    <div class="stage-top">
+     <span class="stage-title">Stage 3 - Lost Spirit 迷霊</span>
+     <span class="stage-go">ENTER STAGE</span>
+    </div>
+    <p class="desc-en">I have no idea who that is. Do you? Perhaps it's a spirit that has strayed from the outside world. It's in a rather sorry state, so put it to rest.</p>
+    <p class="desc-jp">誰なのか、私にはさっぱり分からない。君は知っているか？おそらく、外の世界から迷い込んできた霊だろう。ひどく哀れな姿をしている。どうか、安らかに眠らせてやってくれ。</p>
+   </a>
+
+   <a class="stage" href="Stage4/stage4_mizore.html" data-idx="3">
+    <div class="stage-top">
+     <span class="stage-title">Stage 4 - Mizore 霙</span>
+     <span class="stage-go">ENTER STAGE</span>
+    </div>
+    <p class="desc-en">The younger sister of Shigure, the keeper of the boundary. She is seemingly childish and mischievous, and loves having fun.</p>
+    <p class="desc-jp">境界の番人である時雨の妹。子供っぽくいたずら好きな性格で、遊ぶことが大好き。</p>
+   </a>
+
+   <a class="stage" href="stage5/index5.html" data-idx="4">
+    <div class="stage-top">
+     <span class="stage-title">Stage 5 - Barrier 結界</span>
+     <span class="stage-go">ENTER STAGE</span>
+    </div>
+    <p class="desc-en">The final stage.</p>
+    <p class="desc-jp">最終ステージ。</p>
+   </a>
+  </nav>
+
+  <div class="hint blink">Press Z, Enter, or click a stage to begin</div>
+
+  <footer>
+   <div>Idea by Ha (c)</div>
+   <div>Coded Externally</div>
+   <div class="bgm-credit" id="bgmCredit" title="Click to toggle music">
+    <div class="bgm-en">♫ Prelude in B minor - Bach/Siloti</div>
+    <div class="bgm-jp">前奏曲 ロ短調 - バッハ／ジロティ</div>
+   </div>
+  </footer>
+ </div>
+</main>
+
+<script>
+/* ---------- Audio (Main Menu BGM + Web Audio SFX) ---------- */
+const vol={overall:.8,music:.7,sfx:.75};
+const bgm=new Audio('theme.mp3');
+bgm.loop=true;
+bgm.volume=vol.music*vol.overall;
+let bgmMuted=false;
+
+function startBgm(){
+ if(bgmMuted||!bgm.paused)return;
+ bgm.volume=vol.music*vol.overall;
+ bgm.play().catch(()=>{});
+}
+
+startBgm();
+addEventListener('pointerdown',startBgm);
+addEventListener('keydown',startBgm);
+
+const bgmCredit=document.getElementById('bgmCredit');
+bgmCredit.addEventListener('click',e=>{
+ e.stopPropagation();
+ bgmMuted=!bgmMuted;
+ bgmCredit.classList.toggle('muted',bgmMuted);
+ if(bgmMuted)bgm.pause();
+ else startBgm();
+});
+
+let actx=null,sfxGain=null,masterGain=null;
+
+function initAudio(){
+ if(!actx){
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(AC){
+   actx=new AC();
+   masterGain=actx.createGain();
+   sfxGain=actx.createGain();
+   sfxGain.connect(masterGain);
+   masterGain.connect(actx.destination);
+  }
+ }
+ if(actx&&actx.state==='suspended')actx.resume();
+ if(masterGain&&sfxGain){
+  masterGain.gain.value=vol.overall;
+  sfxGain.gain.value=vol.sfx;
+ }
+}
+
+function sfx(type){
+ initAudio();
+ if(!actx||vol.sfx*vol.overall<=0.001)return;
+ const now=actx.currentTime;
+ const tone=(wave,f0,f1,dur,gainVal)=>{
+  const o=actx.createOscillator(),gn=actx.createGain();
+  o.type=wave;
+  o.frequency.setValueAtTime(f0,now);
+  if(f1!==f0)o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),now+dur);
+  gn.gain.setValueAtTime(gainVal,now);
+  gn.gain.exponentialRampToValueAtTime(0.0008,now+dur);
+  o.connect(gn);gn.connect(sfxGain);
+  o.start(now);o.stop(now+dur+.01);
+ };
+ if(type==='select')tone('square',660,880,.04,.08);
+ else if(type==='ok')tone('triangle',880,1320,.08,.12);
+}
+
+/* ---------- Stage Selection & Navigation ---------- */
+const items=[...document.querySelectorAll('.stage:not(.locked)')];
+let sel=0,launching=false;
+
+function setSel(idx,playSound=true){
+ const next=(idx+items.length)%items.length;
+ if(next===sel)return;
+ sel=next;
+ items.forEach((el,i)=>el.classList.toggle('sel',i===sel));
+ if(playSound)sfx('select');
+}
+
+function launch(idx){
+ if(launching)return;
+ launching=true;
+ if(idx!==sel)setSel(idx,false);
+ sfx('ok');
+ const url=items[sel].getAttribute('href');
+ setTimeout(()=>{window.location.href=url},130);
+}
+
+items.forEach((el,i)=>{
+ el.addEventListener('mouseenter',()=>setSel(i,true));
+ el.addEventListener('focus',()=>setSel(i,true));
+ el.addEventListener('click',e=>{e.preventDefault();launch(i)});
+});
+
+addEventListener('keydown',e=>{
+ const k=e.key.toLowerCase();
+ if(['arrowup','arrowdown',' '].includes(k))e.preventDefault();
+ if(e.repeat)return;
+ if(k==='arrowup'||k==='w')setSel(sel-1,true);
+ else if(k==='arrowdown'||k==='s')setSel(sel+1,true);
+ else if(k==='z'||k==='enter')launch(sel);
+});
+
+/* ---------- Subtle Pixel Starfield Background ---------- */
+const C=document.getElementById('bgc'),g=C.getContext('2d'),W=C.width,H=C.height;
+const STARS=Array.from({length:34},()=>({x:Math.random()*W|0,y:Math.random()*H|0,v:6+Math.random()*16}));
+let lt=0,t=0;
+function loop(ts){
+ const dt=Math.min(.1,(ts-lt)/1000||0);lt=ts;t+=dt;
+ g.clearRect(0,0,W,H);
+ g.fillStyle='rgba(197,139,255,.32)';
+ STARS.forEach(q=>g.fillRect(q.x,(q.y+t*q.v)%H|0,2,2));
+ requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script></body></html>
